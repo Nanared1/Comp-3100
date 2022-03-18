@@ -1,35 +1,24 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, ObjectId } from "mongoose";
 import uniquerValidator from "mongoose-unique-validator";
 import { config } from "../shared/config";
-import { IUserModel } from "./user";
-import { IArticle } from "./article";
 
 export interface IComment {
   _id: mongoose.Types.ObjectId;
-  Comment: string;
-  ariticle: IArticle;
-  tagList: {
-    tag: string;
-  };
+  body: string;
+  article_id: ObjectId;
   created: Date;
   updated: Date;
-  author: IUserModel;
-  like: {
-    likedBy: IUserModel;
-    created: Date;
-  };
-  likeCount: number;
+  author_id: ObjectId;
+  likes: ObjectId[];
 }
 
 const commentSchema = new Schema({
-  comment: { type: String, required: true },
-  article: { type: mongoose.Types.ObjectId, ref: "IComment", required: true },
-  tagList: [{ type: String, required: false }],
+  body: { type: String, required: true },
+  article_id: { type: mongoose.Types.ObjectId, required: true },
   created: { type: Date, required: true },
   updated: { type: Date, required: true },
-  author: { type: mongoose.Types.ObjectId, ref: "IUserModel", required: true },
-  like: [{ likedBy: { type: mongoose.Types.ObjectId, ref: "IUserModel", required: false }, created: Date }],
-  likeCount: { type: Number, default: 0, required: false },
+  author_id: { type: mongoose.Types.ObjectId, required: true },
+  likes: [mongoose.Types.ObjectId],
 });
 
 commentSchema.plugin(uniquerValidator);

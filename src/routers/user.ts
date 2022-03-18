@@ -1,17 +1,11 @@
 import express from "express";
+import { getUserById, signupUser } from "../controllers/user";
 const router = express.Router();
 import User, { IUserModel } from "../models/user";
 
 router.post("/", async (req, res) => {
   try {
-    await User
-      .create({
-        displayName: req.body.username,
-        email: req.body.email,
-        providerId: req.body.providerId,
-        photoURL: req.body.photoURL,
-        uid: req.body.uid,
-      })
+    await signupUser(req)
       .then((data) => {
         res.status(201).send({
           status: true,
@@ -22,7 +16,7 @@ router.post("/", async (req, res) => {
       .catch((err) => {
         res.status(400).send({
           status: false,
-          message: "Error: Bad request",
+          message: err,
         });
       });
   } catch (err) {
@@ -33,7 +27,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/users", async (req, res) => {
   try {
     await User
       .find()
@@ -59,8 +53,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:uid", async (req, res) => {
   try {
-    await User
-      .findOne({ email: req.params.uid })
+    await getUserById(req.params.uid)
       .then((doc) => {
         if (doc) {
           res.status(200).send({

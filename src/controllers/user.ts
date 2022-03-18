@@ -2,20 +2,19 @@ import User, { IUserModel } from "../models/user";
 import bcrypt from "bcrypt";
 import { config } from "../shared/config";
 
-const mongoose = require("mongoose");
+import { Types } from "mongoose";
 
-
-export const signup = async (req, res, next) => {
+export const signupUser = async (req) => {
   const foundUsername = await User.find({ username: req.body.username });
   if (!foundUsername) {
-    return res.status(401).send({ message: "This username is taken" });
+    throw new Error("User already exists");
   }
 
   const salt: string = await bcrypt.genSalt(config.security.saltRounds);
   const password = await bcrypt.hash(req.body.password, salt);
 
   const newUser: IUserModel = {
-    _id: mongoose.Types.ObjectId(),
+    _id: new Types.ObjectId(),
     email: req.body.email,
     username: req.body.username,
     password: password,
@@ -29,5 +28,13 @@ export const signup = async (req, res, next) => {
   } as IUserModel;
 
   const user = new User(newUser);
-  user.save().then((result) => {});
+  return user.save();
+};
+
+export const getUserById = async (id: string) => {
+  return User.findById(new Types.ObjectId(id));
+};
+
+export const getUserByEmail = async (email: string) => {
+  return User.findOne({ email: email });
 };

@@ -1,11 +1,11 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, ObjectId } from "mongoose";
 import uniquerValidator from "mongoose-unique-validator";
 import { config } from "../shared/config";
 import { IUserModel } from "./user";
 import { IComment } from "./comment";
 
 export interface IArticle {
-  _id: mongoose.Types.ObjectId;
+  _id: ObjectId;
   title: string;
   description: string;
   body: string;
@@ -14,7 +14,7 @@ export interface IArticle {
   };
   created: Date;
   updated: Date;
-  author: IUserModel;
+  author_id: ObjectId;
   comments: {
     comment: IComment;
     created: Date;
@@ -32,10 +32,9 @@ const articleSchema = new Schema({
   tagList: [{ type: String, required: false }],
   created: { type: Date, required: true },
   updated: { type: Date, required: true },
-  author: { type: mongoose.Types.ObjectId, ref: "IUserModel", required: true },
-  comments: [{ comment: { type: mongoose.Types.ObjectId, ref: "IComment", required: false } }],
-  like: [{ likedBy: { type: mongoose.Types.ObjectId, ref: "IUserModel", required: false }, created: Date }],
-  likeCount: { type: Number, default: 0, required: false },
+  author: { type: mongoose.Types.ObjectId, required: true },
+  comments: [mongoose.Types.ObjectId],
+  likes: [mongoose.Types.ObjectId]
 });
 
 articleSchema.plugin(uniquerValidator);
