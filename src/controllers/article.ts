@@ -1,5 +1,6 @@
 import { Types } from "mongoose";
 import Article, { IArticle } from "../models/article";
+import { deleteAllCommentsForArticle } from "./comments";
 
 interface CreateArticleProps {
     title: string;
@@ -38,6 +39,7 @@ export const fetchArticlesById = async(id: string) => {
 export const updateArticle = async(update: UpdateArticleProps) => {
     return Article.updateOne({
         _id: new Types.ObjectId(update.id),
+    }, {
         title: update.title,
         body: update.body,
         updated: new Date()
@@ -45,6 +47,7 @@ export const updateArticle = async(update: UpdateArticleProps) => {
 };
 
 export const deleteArticle = async (id: string) => {
-    // delete comments
-    return Article.deleteOne({_id: new Types.ObjectId(id)});
+    return deleteAllCommentsForArticle(id).then(() => {
+        return Article.deleteOne({_id: new Types.ObjectId(id)});
+    });
 };
