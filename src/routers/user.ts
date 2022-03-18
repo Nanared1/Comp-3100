@@ -1,9 +1,8 @@
 import express from "express";
-import { getUserById, signupUser } from "../controllers/user";
+import { getUserById, loginUser, signupUser } from "../controllers/user";
 const router = express.Router();
-import User, { IUserModel } from "../models/user";
 
-router.post("/", async (req, res) => {
+router.post("/signup", async (req, res) => {
   try {
     await signupUser(req)
       .then((data) => {
@@ -27,29 +26,28 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/users", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
-    await User
-      .find()
-      .then((doc) => {
-        res.status(200).send({
-          status: true,
-          data: doc,
-        });
-      })
-      .catch((err) => {
-        res.status(400).send({
-          status: false,
-          message: "Error getting user",
-        });
+    await loginUser(req.body.email, req.body.password).then((tokenData) => {
+      res.status(200).send({
+        status: true,
+        data: tokenData,
       });
+    }).catch((err) => {
+      console.error(err);
+      res.status(400).send({
+        status: false,
+        message: err
+      });
+    });
   } catch (err) {
     res.status(500).send({
       status: false,
-      message: "Unexpected error",
+      message: "Unexpected Error"
     });
   }
 });
+
 
 router.get("/:uid", async (req, res) => {
   try {

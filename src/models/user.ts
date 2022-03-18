@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 import uniquerValidator from "mongoose-unique-validator";
 import { config } from "../shared/config";
 
-export interface IUserModel {
+export interface IUserModel extends Document {
     _id: mongoose.Types.ObjectId;
     email: string;
     password: string;

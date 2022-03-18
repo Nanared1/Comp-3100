@@ -1,7 +1,5 @@
 import express from "express";
-import mongoose from "mongoose";
 import { createArticle, deleteArticle, fetchArticlesByAuthorId, fetchArticlesById, updateArticle } from "../controllers/article";
-import Article from "../models/article";
 
 
 const router = express.Router();

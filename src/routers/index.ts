@@ -6,6 +6,6 @@ const articleRouter = require("./articles");
 
 
 router.use("/user", userRouter);
-router.use("/stories", articleRouter);
+router.use("/articles", articleRouter);
 
 export default router;
