@@ -11,6 +11,7 @@ export interface IUserModel extends Document {
         first: string;
         last: string;
     };
+    followers: Types.ObjectId[];
     created: Date;
     updated: Date;
     lastActiveAt: Date;
@@ -31,6 +32,7 @@ const userSchema = new Schema({
         first: { type: String, required: true },
         last: { type: String },
     },
+    followers: [mongoose.Types.ObjectId]
     created: { type: Date, required: true },
     updated: { type: Date, required: true },
     isActive: { type: Boolean, default: false },
