@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import { createArticle, fetchArticlesByAuthorId, fetchArticlesById, updateArticle } from "../controllers/article";
+import { createArticle, deleteArticle, fetchArticlesByAuthorId, fetchArticlesById, updateArticle } from "../controllers/article";
 import Article from "../models/article";
 
 
@@ -95,6 +95,28 @@ router.patch("/:id", async (req, res) => {
       res.status(400).send({
         status: false,
         message: "Error in updating story",
+      });
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      status: false,
+      message: "Unexpected error occurred",
+    });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    await deleteArticle(req.params.id).then((doc) => {
+      res.status(200).send({
+        status: true,
+        data: doc,
+      });
+    }).catch(() => {
+      res.status(400).send({
+        status: false,
+        message: "Error in deleting article",
       });
     });
   } catch (err) {

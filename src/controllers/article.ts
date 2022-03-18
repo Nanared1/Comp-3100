@@ -43,3 +43,8 @@ export const updateArticle = async(update: UpdateArticleProps) => {
         updated: new Date()
     });
 };
+
+export const deleteArticle = async (id: string) => {
+    // delete comments
+    return Article.deleteOne({_id: new Types.ObjectId(id)});
+};
