@@ -4,6 +4,8 @@ import bodyParser from "body-parser";
 import { config } from "./shared/config";
 import passport from "passport";
 import cookieSession from "cookie-session";
+const router = require("./routers");
+
 require("./controllers/googlePassport");
 
 mongoose
@@ -68,5 +70,7 @@ app.get(
     res.redirect("/success");
   }
 );
+
+app.use("/api",router);
 
 export default app;
