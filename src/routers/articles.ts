@@ -1,21 +1,23 @@
 import express from "express";
 import mongoose from "mongoose";
-import Article, { IArticle } from "../models/article";
+import { createArticle, fetchArticlesByAuthorId, fetchArticlesById, updateArticle } from "../controllers/article";
+import Article from "../models/article";
 
 
 const router = express.Router();
 router.post("/", async (req, res) => {
   try {
-    await Article
-      .create({
-        title: req.body.title,
-        content: req.body.content,
-        userId: req.body.userId,
-      })
+    await createArticle({
+      authorId: req.body.author_id,
+      title: req.body.title,
+      tags: req.body.tags,
+      body: req.body.body
+    })
       .then((doc) => {
         res.status(201).send({
           status: true,
           message: "Stories added successfully",
+          data: doc
         });
       })
       .catch(() => {
@@ -32,20 +34,9 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/author/:authorId", async (req, res) => {
   try {
-    await Article
-      .aggregate([
-        {
-          $lookup: {
-            from: "users", //collection to join
-            localField: "userId", //field from input document
-            foreignField: "_id",
-            as: "userDetails", //output array field
-          },
-        },
-      ])
-      .exec()
+    await fetchArticlesByAuthorId(req.params.authorId)
       .then((doc) => {
         res.status(200).send({
           status: true,
@@ -68,22 +59,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    await Article
-      .aggregate([
-        {
-          $match: { _id: new mongoose.Types.ObjectId(req.params.id) },
-        },
-        {
-          $lookup: {
-            from: "users", //collection to join
-            localField: "userId", //field from input document
-            foreignField: "_id",
-            as: "userDetails", //output array field
-          },
-        },
-      ])
-      .exec()
-      .then((doc) => {
+    await fetchArticlesById(req.params.id).then((doc) => {
         res.status(200).send({
           status: true,
           data: doc,
@@ -104,35 +80,23 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.get("/user/:uid", async (req, res) => {
+router.patch("/:id", async (req, res) => {
   try {
-    await Article
-      .aggregate([
-        {
-          $match: { userId: new mongoose.Types.ObjectId(req.params.uid) },
-        },
-        //   {
-        //     $lookup: {
-        //       from: "users", //collection to join
-        //       localField: "userId", //field from input document
-        //       foreignField: "_id",
-        //       as: "userDetails", //output array field
-        //     },
-        //   },
-      ])
-      .exec()
-      .then((doc) => {
-        res.status(200).send({
-          status: true,
-          data: doc,
-        });
-      })
-      .catch(() => {
-        res.status(400).send({
-          status: false,
-          message: "Error in fetching stories",
-        });
+    await updateArticle({
+      id: req.params.id,
+      title: req.body.title,
+      body: req.body.body
+    }).then((doc) => {
+      res.status(200).send({
+        status: true,
+        data: doc,
       });
+    }).catch(() => {
+      res.status(400).send({
+        status: false,
+        message: "Error in updating story",
+      });
+    });
   } catch (err) {
     console.log(err);
     res.status(500).send({
@@ -141,5 +105,6 @@ router.get("/user/:uid", async (req, res) => {
     });
   }
 });
+
 
 export default router;
