@@ -32,7 +32,6 @@ export const config = {
     violationAlertsSentTo: "nbabekah@mun.ca",
   },
   tableNames: {
-    files: "files",
     users: "users",
     articles: "articles",
     comments: "comments",
