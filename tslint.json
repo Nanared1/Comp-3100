@@ -9,7 +9,7 @@
         "indent": [
             true,
             "spaces",
-            4
+            2
         ],
         "one-line": [
             true,

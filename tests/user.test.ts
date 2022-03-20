@@ -1,5 +1,4 @@
 import User from "../src/models/user";
-import assert from "assert";
 import request from "request";
 import { expect } from "chai";
 import { signupUser } from "../src/controllers/user";

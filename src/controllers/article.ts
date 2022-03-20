@@ -5,7 +5,7 @@ import { deleteAllCommentsForArticle } from "./comments";
 interface CreateArticleProps {
     title: string;
     body: string;
-    authorId: Types.ObjectId;
+    authorId: string;
     tags: string[];
 }
 
@@ -18,6 +18,7 @@ interface UpdateArticleProps {
 export const createArticle = async(newArticle: CreateArticleProps) => {
     const article: IArticle = {
         ...newArticle,
+        authorId: new Types.ObjectId(newArticle.authorId),
         _id: new Types.ObjectId(),
         updated: new Date(),
         created: new Date(),
