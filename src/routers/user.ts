@@ -50,10 +50,10 @@ router.post("/login", async (req, res) => {
 
 router.post("/follow", async (req, res) => {
   try {
-    await followUser(req.body.userId, req.body.followerId).then((tokenData) => {
+    await followUser(req.body.userId, req.body.followerId).then((doc) => {
       res.status(200).send({
         status: true,
-        data: tokenData,
+        data: doc,
       });
     }).catch((err) => {
       console.error(err);
@@ -72,10 +72,10 @@ router.post("/follow", async (req, res) => {
 
 router.post("/unfollow", async (req, res) => {
   try {
-    await unfollowUser(req.body.userId, req.body.followerId).then((tokenData) => {
+    await unfollowUser(req.body.userId, req.body.followerId).then((doc) => {
       res.status(200).send({
         status: true,
-        data: tokenData,
+        data: doc,
       });
     }).catch((err) => {
       console.error(err);
@@ -94,10 +94,10 @@ router.post("/unfollow", async (req, res) => {
 
 router.post("/block", async (req, res) => {
   try {
-    await blockUser(req.body.userId, req.body.followerId).then((tokenData) => {
+    await blockUser(req.body.userId, req.body.followerId).then((doc) => {
       res.status(200).send({
         status: true,
-        data: tokenData,
+        data: doc,
       });
     }).catch((err) => {
       console.error(err);
@@ -116,10 +116,10 @@ router.post("/block", async (req, res) => {
 
 router.post("/unblock", async (req, res) => {
   try {
-    await unblockUser(req.body.userId, req.body.followerId).then((tokenData) => {
+    await unblockUser(req.body.userId, req.body.followerId).then((doc) => {
       res.status(200).send({
         status: true,
-        data: tokenData,
+        data: doc,
       });
     }).catch((err) => {
       console.error(err);

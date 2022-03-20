@@ -1,7 +1,8 @@
 import User from "../src/models/user";
 import request from "request";
 import { expect } from "chai";
-import { signupUser } from "../src/controllers/user";
+import { followUser, signupUser } from "../src/controllers/user";
+import { Types } from "mongoose";
 
 describe("User API Tests", () => {
   beforeEach((done) => {
@@ -16,6 +17,10 @@ describe("User API Tests", () => {
     })
       .then(() => done())
       .catch(() => done());
+  });
+
+  afterEach((done) => {
+    User.collection.drop(() => done());
   });
   describe("Signup User", () => {
     const url = "http://localhost:5500/api/user/signup";
@@ -118,4 +123,166 @@ describe("User API Tests", () => {
       );
     });
   });
+
+  describe("Follow and Unfollow users", () => {
+    const url = "http://localhost:5500/api/user";
+    it("should follow existing user", async () => {
+      await User.collection.drop();
+      const newUser = await signupUser({
+        email: "test@gmail.com",
+        password: "test1234#",
+        username: "test_name",
+        name: {
+          first: "test",
+          last: "test",
+        },
+      });
+
+      const userId = newUser._id;
+      const followerId = new Types.ObjectId();
+
+      request.post(
+        `${url}/follow`,
+        {
+          json: {
+            userId,
+            followerId,
+          },
+        },
+        (err, resp, body) => {
+          expect(resp.statusCode).to.equal(200);
+        }
+      );
+    });
+
+    it("should throw error for following non existent user", async () => {
+
+      request.post(
+        `${url}/follow`,
+        {
+          json: {
+            userId: new Types.ObjectId(),
+            followerId: new Types.ObjectId(),
+          },
+        },
+        (err, resp, body) => {
+          expect(resp.statusCode).to.equal(200);
+          expect(body.data.modifiedCount).equal(0);
+        }
+      );
+    });
+
+    it("should unfollow existing user being followed", async () => {
+      await User.collection.drop();
+      const newUser = await signupUser({
+        email: "test@gmail.com",
+        password: "test1234#",
+        username: "test_name",
+        name: {
+          first: "test",
+          last: "test",
+        },
+      });
+
+      const userId = newUser._id;
+      const followerId = new Types.ObjectId();
+
+      await followUser(userId, followerId.toHexString());
+
+      request.post(
+        `${url}/unfollow`,
+        {
+          json: {
+            userId,
+            followerId,
+          },
+        },
+        (err, resp, body) => {
+          expect(resp.statusCode).to.equal(200);
+        }
+      );
+    });
+
+    it("should unfollow existing user not being followed", async () => {
+      await User.collection.drop();
+      const newUser = await signupUser({
+        email: "test@gmail.com",
+        password: "test1234#",
+        username: "test_name",
+        name: {
+          first: "test",
+          last: "test",
+        },
+      });
+
+      const userId = newUser._id;
+      const followerId = new Types.ObjectId();
+
+      request.post(
+        `${url}/unfollow`,
+        {
+          json: {
+            userId,
+            followerId,
+          },
+        },
+        (err, resp, body) => {
+          expect(body.data.modifiedCount).equal(0);
+          expect(resp.statusCode).to.equal(200);
+        }
+      );
+    });
+
+  });
+
+  describe("Block and Unblock users", () => {
+    const url = "http://localhost:5500/api/user";
+    it("should block existing user", async () => {
+      await User.collection.drop();
+      const newUser = await signupUser({
+        email: "test@gmail.com",
+        password: "test1234#",
+        username: "test_name",
+        name: {
+          first: "test",
+          last: "test",
+        },
+      });
+
+      const userId = newUser._id;
+      const followerId = new Types.ObjectId();
+
+      request.post(
+        `${url}/block`,
+        {
+          json: {
+            userId,
+            followerId,
+          },
+        },
+        (err, resp, body) => {
+          expect(resp.statusCode).to.equal(200);
+        }
+      );
+    });
+
+    it("should throw error for following non existent user", async () => {
+
+      request.post(
+        `${url}/block`,
+        {
+          json: {
+            userId: new Types.ObjectId(),
+            followerId: new Types.ObjectId(),
+          },
+        },
+        (err, resp, body) => {
+          expect(resp.statusCode).to.equal(200);
+          expect(body.data.modifiedCount).equal(0);
+        }
+      );
+    });
+  });
+
+
 });

@@ -37,7 +37,7 @@ export const config = {
     comments: "comments",
   },
   cors: {
-    origin: process.env.NODE_ENV === Environments.production ? "https://mediumclone.ca" : "http://localhost:5500",
+    origin: process.env.NODE_ENV === Environments.production ? "" : "http://localhost:5500",
   },
   mongodb: {
     host: "mongodb://127.0.0.1:27017",

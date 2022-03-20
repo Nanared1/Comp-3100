@@ -57,7 +57,7 @@ export const getUserByEmail = async (email: string) => {
 };
 
 export const followUser = async(userId: string, followerId: string) => {
-  return User.findOneAndUpdate({
+  return User.updateOne({
       _id: new Types.ObjectId(userId),
       followers: { $ne: new Types.ObjectId(followerId) }
   }, {
@@ -68,7 +68,7 @@ export const followUser = async(userId: string, followerId: string) => {
 };
 
 export const unfollowUser = async(userId: string, followerId: string) => {
-  return User.findByIdAndUpdate({
+  return User.updateOne({
       _id: new Types.ObjectId(userId),
   }, {
       $pull: {
@@ -78,7 +78,7 @@ export const unfollowUser = async(userId: string, followerId: string) => {
 };
 
 export const blockUser = async(userId: string, blockedUserId: string) => {
-  return User.findOneAndUpdate({
+  return User.updateOne({
       _id: new Types.ObjectId(userId),
       blockedUsers: { $ne: new Types.ObjectId(blockedUserId) }
   }, {
@@ -89,7 +89,7 @@ export const blockUser = async(userId: string, blockedUserId: string) => {
 };
 
 export const unblockUser = async(userId: string, blockedUserId: string) => {
-  return User.findByIdAndUpdate({
+  return User.updateOne({
       _id: new Types.ObjectId(userId),
   }, {
       $pull: {
