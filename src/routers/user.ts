@@ -1,5 +1,5 @@
 import express from "express";
-import { getUserById, loginUser, signupUser } from "../controllers/user";
+import { blockUser, followUser, getUserById, loginUser, signupUser, unblockUser, unfollowUser } from "../controllers/user";
 const router = express.Router();
 
 router.post("/signup", async (req, res) => {
@@ -47,6 +47,94 @@ router.post("/login", async (req, res) => {
   }
 });
 
+
+router.post("/follow", async (req, res) => {
+  try {
+    await followUser(req.body.userId, req.body.followerId).then((tokenData) => {
+      res.status(200).send({
+        status: true,
+        data: tokenData,
+      });
+    }).catch((err) => {
+      console.error(err);
+      res.status(400).send({
+        status: false,
+        message: err
+      });
+    });
+  } catch (err) {
+    res.status(500).send({
+      status: false,
+      message: "Unexpected Error"
+    });
+  }
+});
+
+router.post("/unfollow", async (req, res) => {
+  try {
+    await unfollowUser(req.body.userId, req.body.followerId).then((tokenData) => {
+      res.status(200).send({
+        status: true,
+        data: tokenData,
+      });
+    }).catch((err) => {
+      console.error(err);
+      res.status(400).send({
+        status: false,
+        message: err
+      });
+    });
+  } catch (err) {
+    res.status(500).send({
+      status: false,
+      message: "Unexpected Error"
+    });
+  }
+});
+
+router.post("/block", async (req, res) => {
+  try {
+    await blockUser(req.body.userId, req.body.followerId).then((tokenData) => {
+      res.status(200).send({
+        status: true,
+        data: tokenData,
+      });
+    }).catch((err) => {
+      console.error(err);
+      res.status(400).send({
+        status: false,
+        message: err
+      });
+    });
+  } catch (err) {
+    res.status(500).send({
+      status: false,
+      message: "Unexpected Error"
+    });
+  }
+});
+
+router.post("/unblock", async (req, res) => {
+  try {
+    await unblockUser(req.body.userId, req.body.followerId).then((tokenData) => {
+      res.status(200).send({
+        status: true,
+        data: tokenData,
+      });
+    }).catch((err) => {
+      console.error(err);
+      res.status(400).send({
+        status: false,
+        message: err
+      });
+    });
+  } catch (err) {
+    res.status(500).send({
+      status: false,
+      message: "Unexpected Error"
+    });
+  }
+});
 
 router.get("/:uid", async (req, res) => {
   try {

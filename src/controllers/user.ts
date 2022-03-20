@@ -56,6 +56,48 @@ export const getUserByEmail = async (email: string) => {
   return User.findOne({ email: email });
 };
 
+export const followUser = async(userId: string, followerId: string) => {
+  return User.findOneAndUpdate({
+      _id: new Types.ObjectId(userId),
+      followers: { $ne: new Types.ObjectId(followerId) }
+  }, {
+      $addToSet: {
+          followers: new Types.ObjectId(followerId)
+      }
+  });
+};
+
+export const unfollowUser = async(userId: string, followerId: string) => {
+  return User.findByIdAndUpdate({
+      _id: new Types.ObjectId(userId),
+  }, {
+      $pull: {
+          followers: new Types.ObjectId(followerId)
+      }
+  });
+};
+
+export const blockUser = async(userId: string, blockedUserId: string) => {
+  return User.findOneAndUpdate({
+      _id: new Types.ObjectId(userId),
+      blockedUsers: { $ne: new Types.ObjectId(blockedUserId) }
+  }, {
+      $addToSet: {
+          blockedUsers: new Types.ObjectId(blockedUserId)
+      }
+  });
+};
+
+export const unblockUser = async(userId: string, blockedUserId: string) => {
+  return User.findByIdAndUpdate({
+      _id: new Types.ObjectId(userId),
+  }, {
+      $pull: {
+          blockedUsers: new Types.ObjectId(blockedUserId)
+      }
+  });
+};
+
 export const generateToken = (user: IUserModel): { expiresIn: number; expiresAt: Moment; token: string } => {
   const jsonUser = JSON.parse(JSON.stringify(user));
   return {

@@ -12,6 +12,7 @@ export interface IUserModel extends Document {
         last: string;
     };
     followers: mongoose.Types.ObjectId[];
+    blockedUsers: mongoose.Types.ObjectId[];
     created: Date;
     updated: Date;
     lastActiveAt: Date;
@@ -33,6 +34,7 @@ const userSchema = new Schema({
         last: { type: String },
     },
     followers: [mongoose.Types.ObjectId],
+    blockedUsers: [mongoose.Types.ObjectId],
     created: { type: Date, required: true },
     updated: { type: Date, required: true },
     isActive: { type: Boolean, default: false },
