@@ -1,6 +1,6 @@
 ### Run app
 
-You must create a mongodb database title `MediumClone`.
+**You must create a mongodb database title** `MediumClone`.
 
 ```
 npm install
