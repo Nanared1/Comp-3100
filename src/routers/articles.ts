@@ -14,14 +14,14 @@ router.post("/", async (req, res) => {
       .then((doc) => {
         res.status(201).send({
           status: true,
-          message: "Stories added successfully",
+          message: "Article added successfully",
           data: doc
         });
       })
       .catch(() => {
         res.status(400).send({
           status: false,
-          message: "Error while adding stories",
+          message: "Error while adding Article",
         });
       });
   } catch (err) {
@@ -66,7 +66,7 @@ router.get("/:id", async (req, res) => {
       .catch(() => {
         res.status(400).send({
           status: false,
-          message: "Error in fetching stories",
+          message: "Error in fetching Articles",
         });
       });
   } catch (err) {
@@ -92,7 +92,7 @@ router.patch("/:id", async (req, res) => {
     }).catch(() => {
       res.status(400).send({
         status: false,
-        message: "Error in updating story",
+        message: "Error in updating Article",
       });
     });
   } catch (err) {
