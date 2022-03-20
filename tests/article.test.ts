@@ -1,7 +1,5 @@
-import User from "../src/models/user";
 import request from "request";
 import { expect } from "chai";
-import { signupUser } from "../src/controllers/user";
 import { createArticle } from "../src/controllers/article";
 import Article, { IArticle } from "../src/models/article";
 

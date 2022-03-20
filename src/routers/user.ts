@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.post("/signup", async (req, res) => {
   try {
-    await signupUser(req)
+    await signupUser(req.body)
       .then(() => {
         res.status(201).send({
           status: true,

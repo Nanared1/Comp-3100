@@ -6,23 +6,23 @@ import moment, { Moment } from "moment";
 
 import { Types } from "mongoose";
 
-export const signupUser = async (req) => {
-  const foundUsername = await User.find({ $or: [{ username: req.body.username }, { email: req.body.email }] });
+export const signupUser = async (_user) => {
+  const foundUsername = await User.find({ $or: [{ username: _user.username }, { email: _user.email }] });
   if (!foundUsername) {
     throw new Error("User already exists");
   }
 
   const salt: string = await bcrypt.genSalt(config.security.saltRounds);
-  const password = await bcrypt.hash(req.body.password, salt);
+  const password = await bcrypt.hash(_user.password, salt);
 
   const newUser: IUserModel = {
     _id: new Types.ObjectId(),
-    email: req.body.email,
-    username: req.body.username,
+    email: _user.email,
+    username: _user.username,
     password: password,
     name: {
-      first: req.body.name.first,
-      last: req.body.name.last,
+      first: _user.name.first,
+      last: _user.name.last,
     },
     created: new Date(),
     updated: new Date(),
