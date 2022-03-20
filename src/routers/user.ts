@@ -5,11 +5,10 @@ const router = express.Router();
 router.post("/signup", async (req, res) => {
   try {
     await signupUser(req)
-      .then((data) => {
+      .then(() => {
         res.status(201).send({
           status: true,
-          data: data,
-          message: "User created successfully",
+          message: "User Created",
         });
       })
       .catch((err) => {

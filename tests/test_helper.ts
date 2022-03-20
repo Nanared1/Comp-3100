@@ -7,19 +7,8 @@ import { config } from "../src/shared/config";
 mongoose.connect(config.mongodb.host, { dbName: config.mongodb.dbName });
 
 mongoose.connection
-  .once("open", () => console.log("Connected!"))
+  .once("open", () => console.log("Connected to db"))
   .on("error", (error) => {
     console.warn("Error : ", error);
   });
 
-beforeEach(async(done) => {
-  await User.collection.drop(() => {
-    done();
-  });
-  await Article.collection.drop(() => {
-    done();
-  });
-  await Comment.collection.drop(() => {
-    done();
-  });
-});

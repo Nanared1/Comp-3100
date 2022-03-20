@@ -7,7 +7,7 @@ import moment, { Moment } from "moment";
 import { Types } from "mongoose";
 
 export const signupUser = async (req) => {
-  const foundUsername = await User.find({ username: req.body.username });
+  const foundUsername = await User.find({ $or: [{ username: req.body.username }, { email: req.body.email }] });
   if (!foundUsername) {
     throw new Error("User already exists");
   }
@@ -34,7 +34,7 @@ export const signupUser = async (req) => {
 };
 
 export const loginUser = async (email, password) => {
-  const user: IUserModel = await getUserByEmail(email)
+  const user: IUserModel | any = await getUserByEmail(email)
     .then((user) => user)
     .catch((err) => {
       throw new Error("user not found");

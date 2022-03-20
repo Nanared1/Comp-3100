@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import { config } from "./shared/config";
 import passport from "passport";
 import cookieSession from "cookie-session";
-const router = require("./routers");
+import router from "./routers";
 
 require("./controllers/googlePassport");
 
