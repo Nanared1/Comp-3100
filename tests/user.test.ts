@@ -14,7 +14,7 @@ describe("User API Tests", () => {
         first: "test",
         last: "test",
       }
-    }}).then(() => done()).catch(() => done());
+    }}).then(() => done()).catch(()=> done());
   });
   describe("Signup User", () => {
     const url = "http://localhost:5500/api/user/signup";

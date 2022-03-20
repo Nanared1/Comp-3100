@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import Comment from "../models/comment";
+import Comment, { IComment } from "../models/comment";
 
 interface CreateCommentProps {
   body: string;
@@ -13,14 +13,17 @@ interface UpdateCommentProps {
 }
 
 export const createComment = async (newComment: CreateCommentProps) => {
-  return Comment.create({
+  console.log("creating comment", newComment.authorId, newComment.articleId);
+  const _comment: IComment = {
+    _id: new Types.ObjectId(),
     body: newComment.body,
-    articleId: newComment.articleId,
-    authorId: newComment.authorId,
+    articleId: new Types.ObjectId(),
+    authorId: new Types.ObjectId(),
     likes: [],
     created: new Date(),
     updated: new Date(),
-  });
+  };
+  return Comment.create(_comment);
 };
 
 export const getCommentById = async (id: string) => {

@@ -1,15 +1,15 @@
-import mongoose, { Schema, ObjectId } from "mongoose";
+import mongoose, { Schema, Types } from "mongoose";
 import uniquerValidator from "mongoose-unique-validator";
 import { config } from "../shared/config";
 
 export interface IComment {
-  _id: mongoose.Types.ObjectId;
+  _id: Types.ObjectId;
   body: string;
-  articleId: ObjectId;
+  articleId: Types.ObjectId;
   created: Date;
   updated: Date;
-  authorId: ObjectId;
-  likes: ObjectId[];
+  authorId: Types.ObjectId;
+  likes: Types.ObjectId[];
 }
 
 const commentSchema = new Schema({

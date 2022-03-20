@@ -4,9 +4,10 @@ const router = express.Router();
 
 router.get("/:id", async (req, res) => {
   try {
-    getCommentById(req.params.id)
+    await getCommentById(req.params.id)
       .then((doc) => {
         res.status(200).send({
+            status: true,
           data: doc,
         });
       })
@@ -25,7 +26,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    createComment({
+    await createComment({
       body: req.body.body,
       articleId: req.body.articleId,
       authorId: req.body.authorId,
@@ -36,6 +37,7 @@ router.post("/", async (req, res) => {
         });
       })
       .catch((err) => {
+          console.error(err);
         res.status(400).send({
           message: err,
         });
@@ -50,9 +52,10 @@ router.post("/", async (req, res) => {
 
 router.patch("/:id", async (req, res) => {
   try {
-    updateComment({ id: req.params.id, body: req.body.body })
+    await updateComment({ id: req.params.id, body: req.body.body })
       .then((doc) => {
         res.status(200).send({
+          status: true,
           data: doc,
         });
       })
@@ -71,7 +74,7 @@ router.patch("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    deleteComment(req.params.id)
+    await deleteComment(req.params.id)
       .then((doc) => {
         res.status(200).send({
           data: doc,
