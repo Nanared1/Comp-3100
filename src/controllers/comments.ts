@@ -38,6 +38,13 @@ export const updateComment = async (updatedComment: UpdateCommentProps) => {
   return Comment.updateOne({ _id: new Types.ObjectId(updatedComment.id) }, { body: updatedComment.body });
 };
 
+
+/**
+ * 
+ * @param userId id of user liking comment
+ * @param commentId comment being liked
+ * @returns 
+ */
 export const likeComment = async (userId: string, commentId: string) => {
     return Comment.findOneAndUpdate({
         _id: new Types.ObjectId(commentId),
