@@ -107,7 +107,7 @@ describe("User API Tests", () => {
       );
     });
 
-    it("It should fail to login user with not email found", (done) => {
+    it("It should fail to login user with non existent email", (done) => {
       request.post(
         url,
         {
