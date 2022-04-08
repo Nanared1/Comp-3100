@@ -94,7 +94,7 @@ body {
     color:dodgerblue;
 }
 
-#login {
+#login, #signup {
     border: none;
     background-color: cadetblue;
     color: #fff;
@@ -106,6 +106,6 @@ body {
     line-height: 40px;
 }
 
-#login:active {
+#login:active, #signup:active {
     background-color: crimson;
 }

@@ -7,6 +7,7 @@ import moment, { Moment } from "moment";
 import { Types } from "mongoose";
 
 export const signupUser = async (_user) => {
+  console.log(_user)
   const foundUsername = await User.find({ $or: [{ username: _user.username }, { email: _user.email }] });
   if (!foundUsername) {
     throw new Error("User already exists");
@@ -45,7 +46,10 @@ export const loginUser = async (email, password) => {
     throw new Error("Incorrect password");
   }
 
-  return generateToken(user);
+  return {
+    token: generateToken(user),
+    user: user
+  };
 };
 
 export const getUserById = async (id: string) => {

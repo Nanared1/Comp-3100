@@ -5,6 +5,7 @@ import { createArticle, deleteArticle, fetchArticlesByAuthorId, fetchArticlesByI
 const router = express.Router();
 router.post("/", async (req, res) => {
   try {
+    console.log(req.body);
     await createArticle({
       authorId: req.body.author_id,
       title: req.body.title,
