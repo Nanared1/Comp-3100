@@ -1,0 +1,60 @@
+.list-container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    padding: 25px 50px;
+    box-sizing: border-box;
+}
+
+.card-container {
+    border-bottom: 1px solid;
+    display: flex;
+    flex-direction: column;
+    padding: 0px 5px 20px;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.card-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-decoration: none;
+    color: #000;
+}
+
+.card-shallow-body {
+    font-size: 20px;
+    opacity: 0.5;
+    margin-bottom: 5px;
+}
+
+.created-date-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-author {
+    font-weight: bold;
+}
+
+.card-date {
+    font-weight: bold;
+}
+
+button {
+    border: none;
+    background-color: cadetblue;
+    color: #fff;
+    border-radius: 5px;
+    width: 100%;
+    width: 50px;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+button:active {
+    background-color: crimson;
+}

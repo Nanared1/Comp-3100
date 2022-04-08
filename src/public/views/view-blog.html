@@ -1,0 +1,55 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="../frontend.js"></script>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../styles/view-blog.css">
+</head>
+
+<body>
+    <div id="main">
+        <div id="layout">
+            <div id="layout_left">
+                <div class="nav-container">
+                    <a class="nav-item" href="./home.html">Home</a>
+                    <a class="nav-item" href="./profile.html">Profile</a>
+                    <a class="nav-item" href="./blog.html">Create Blog</a>
+                    <a class="nav-item" href="../index.html">Logout</a>
+                </div>
+            </div>
+            <div id="layout_middle">
+                <div class="container">
+                    <h1 id="blog_title">This is a blog title</h1>
+                
+                    <p id="blog_content">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+                        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate 
+                        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+                        sunt in culpa qui officia deserunt mollit anim id est laborum."
+                    </p>
+
+                    <p id="written_by">By: John Smith</p>
+                    <span id="date">Tue, 23 Oct, 2021</span>
+                </div>
+            </div> 
+            <div id="layout_right">
+                <div class="comments-list-container">
+                    <h3>Comments</h3>
+                    <textarea id="new-comment-input" placeholder="Add Comment..."></textarea>
+                    <button id="submit-button" class="submit-button">Submit</button>
+                    <div class="comment-container">
+                        <p id="comment-body">somethign very stupid</p>
+                        <div class="author-date">
+                            <span id="comment-author">John Smith</span>
+                            <span id="comment-date">Today</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

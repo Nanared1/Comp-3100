@@ -1,0 +1,76 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 25px 50px;
+    box-sizing: border-box;
+}
+
+#blog_content {
+    font-size: 20px;
+    opacity: 0.7;
+}
+
+#written_by {
+    margin-top: auto;
+    font-weight: bold;
+}
+
+#date {
+    font-weight: bold;
+}
+
+.comments-list-container {
+    display: flex;
+    flex-direction: column;
+    padding: 25px 50px;
+    box-sizing: border-box;
+}
+
+.comment-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#comment-body {
+    font-size: 16px;
+}
+
+.author-date {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.author-date > span {
+    opacity: 0.5;
+}
+
+.submit-button {
+    border: none;
+    background-color: cadetblue;
+    color: #fff;
+    border-radius: 5px;
+    width: 100%;
+    width: 100px;
+    margin-left: auto;
+    margin-top: 5px;
+    font-size: 16px;
+    line-height: 30px;
+}
+
+.submit-button:active {
+    background-color: crimson;
+}
+
+textarea {
+    width: 100%;
+    resize: none;
+    padding: 5px;
+    border-radius: 5px;
+    height: 50px;
+    border: 1px solid;
+    font-size: 16px;
+    font-family: 'Times New Roman', Times, serif;
+    outline: none;
+}
