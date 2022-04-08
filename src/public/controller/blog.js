@@ -11,9 +11,7 @@ $(function () {
     function getSelectedArticle() {
         let selectedArticle = JSON.parse(localStorage.getItem("selected_article"));
 
-        if(!localStorage.getItem("selected_article")) {
-            window.location.href = "home.html";
-        } else {
+        if(localStorage.getItem("selected_article")) {
             $("#blog_title").text(selectedArticle.title);
             $("#blog_content").text(selectedArticle.body);
             $("#written_by").text(`${user.name.first} ${user.name.last}`);
