@@ -27,6 +27,11 @@
     box-sizing: border-box;
 }
 
+.all-comments {
+    display: flex;
+    flex-direction: column;
+}
+
 .comment-container {
     display: flex;
     flex-direction: column;

@@ -1,10 +1,33 @@
 import express from "express";
-import { createComment, deleteComment, getCommentById, updateComment } from "../controllers/comments";
+import { createComment, deleteComment, getArticleComments, getCommentById, updateComment } from "../controllers/comments";
 const router = express.Router();
 
 router.get("/:id", async (req, res) => {
   try {
     await getCommentById(req.params.id)
+      .then((doc) => {
+        res.status(200).send({
+            status: true,
+          data: doc,
+        });
+      })
+      .catch((err) => {
+        res.status(400).send({
+          message: err,
+        });
+      });
+  } catch (err) {
+    res.status(500).send({
+      status: "false",
+      message: "Internal server error",
+    });
+  }
+});
+
+
+router.get("/article/:id", async (req, res) => {
+  try {
+    await getArticleComments(req.params.id)
       .then((doc) => {
         res.status(200).send({
             status: true,
@@ -37,7 +60,7 @@ router.post("/", async (req, res) => {
         });
       })
       .catch((err) => {
-          console.error(err);
+        console.error(err);
         res.status(400).send({
           message: err,
         });

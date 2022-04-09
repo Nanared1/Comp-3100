@@ -13,12 +13,11 @@ interface UpdateCommentProps {
 }
 
 export const createComment = async (newComment: CreateCommentProps) => {
-  console.log("creating comment", newComment.authorId, newComment.articleId);
   const _comment: IComment = {
     _id: new Types.ObjectId(),
     body: newComment.body,
-    articleId: new Types.ObjectId(),
-    authorId: new Types.ObjectId(),
+    articleId: new Types.ObjectId(newComment.articleId),
+    authorId: new Types.ObjectId(newComment.authorId),
     likes: [],
     created: new Date(),
     updated: new Date(),
