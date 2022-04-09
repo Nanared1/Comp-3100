@@ -10,6 +10,26 @@ body {
     box-sizing: border-box;
 }
 
+.animate {
+    width: 100%;
+    height: 100%;
+    animation: pulse 5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        background-color:lavender;
+    }
+
+    50% {
+        background-color:bisque;
+    }
+
+    100% {
+        background-color: #f2f2f2;
+    }
+}
+
 #layout {
     display: flex;
     height: 100%;
